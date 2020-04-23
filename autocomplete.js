@@ -25,30 +25,35 @@ const createAutoComplete = (config) => {
 		}
 	};
 	const onInput = async (event) => {
-		const movies = await fetchData(event.target.value);
-		const searchResults = movies.data.Search;
+		let searchResults;
+		if (event.target.value.length > 3) {
+			searchResults = await fetchData(event.target.value);
+		}
 		if (searchResults) {
-			for (let movie of searchResults) {
+			for (let country of searchResults) {
 				let option = document.createElement('a');
 				option.classList.add('dropdown-item');
-				option.innerHTML = renderOption(movie);
+				option.innerHTML = renderOption(country);
 				dropdownResults.appendChild(option);
 				option.addEventListener('click', () => {
-					// onMovieClick(movie.imdbID, '#left-summary');
-					onOptionSelect(movie);
+					onOptionSelect(country);
 					dropdownToggle.close();
-					input.value = movie.Title;
+					input.value = country;
 				});
 			}
 			dropdownToggle.open();
 		} else {
 			dropdownToggle.close();
+			dropdownResults.innerHTML = '';
 			console.log('No Results found');
 		}
 	};
 
 	document.addEventListener('click', (e) => {
-		if (!e.target.contains(root)) dropdownToggle.close();
+		if (!e.target.contains(root)) {
+			dropdownResults.innerHTML = '';
+			dropdownToggle.close();
+		}
 	});
 
 	input.addEventListener('input', debounce(onInput, 600));
