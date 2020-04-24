@@ -7,7 +7,7 @@ const autocompleteConfig = {
 			'Andorra',
 			'Angola',
 			'Anguilla',
-			'Antigua &amp; Barbuda',
+			'Antigua & Barbuda',
 			'Argentina',
 			'Armenia',
 			'Aruba',
@@ -25,7 +25,7 @@ const autocompleteConfig = {
 			'Bermuda',
 			'Bhutan',
 			'Bolivia',
-			'Bosnia &amp; Herzegovina',
+			'Bosnia & Herzegovina',
 			'Botswana',
 			'Brazil',
 			'British Virgin Islands',
@@ -167,7 +167,7 @@ const autocompleteConfig = {
 			'Romania',
 			'Russia',
 			'Rwanda',
-			'Saint Pierre &amp; Miquelon',
+			'Saint Pierre & Miquelon',
 			'Samoa',
 			'San Marino',
 			'Sao Tome and Principe',
@@ -186,7 +186,7 @@ const autocompleteConfig = {
 			'South Sudan',
 			'Spain',
 			'Sri Lanka',
-			'St Kitts &amp; Nevis',
+			'St Kitts & Nevis',
 			'St Lucia',
 			'St Vincent',
 			'Sudan',
@@ -202,11 +202,11 @@ const autocompleteConfig = {
 			"Timor L'Este",
 			'Togo',
 			'Tonga',
-			'Trinidad &amp; Tobago',
+			'Trinidad & Tobago',
 			'Tunisia',
 			'Turkey',
 			'Turkmenistan',
-			'Turks &amp; Caicos',
+			'Turks & Caicos',
 			'Tuvalu',
 			'Uganda',
 			'Ukraine',
@@ -225,7 +225,7 @@ const autocompleteConfig = {
 			'Zimbabwe'
 		];
 		const response = countries
-			.filter((val) => val.toLowerCase().includes(searchTerm.toLowerCase()))
+			.filter((val) => val.toLowerCase().includes(searchTerm.trim().toLowerCase()))
 			.sort((a, b) => a - b);
 		return response;
 	},
@@ -263,6 +263,16 @@ const runComparision = () => {
 
 		const leftSideValue = parseFloat(leftStat.dataset.value);
 		const rightSideValue = parseFloat(rightStat.dataset.value);
+		if (
+			leftStats[index].nextElementSibling &&
+			leftStats[index].nextElementSibling.innerHTML === 'Recovered' &&
+			leftSideValue < rightSideValue
+		) {
+			leftStat.parentElement.classList.remove('is-primary');
+			leftStat.parentElement.classList.add('is-danger');
+			rightStat.parentElement.classList.add('is-success');
+			console.log('HAPPENs');
+		}
 		if (leftSideValue < rightSideValue) {
 			rightStat.parentElement.classList.remove('is-primary');
 			rightStat.parentElement.classList.add('is-danger');

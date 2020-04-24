@@ -26,7 +26,7 @@ const createAutoComplete = (config) => {
 	};
 	const onInput = async (event) => {
 		let searchResults;
-		if (event.target.value.length > 3) {
+		if (event.target.value.length > 2) {
 			searchResults = await fetchData(event.target.value);
 		}
 		if (searchResults) {
