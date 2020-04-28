@@ -1,7 +1,7 @@
 const createAutoComplete = (config) => {
 	const { root, fetchData, renderOption, onOptionSelect } = config;
 	root.innerHTML = `
-   <label><b>Search</b></label>
+   <label><b>Search by Country</b></label>
     <input class="input">
     <span class="icon clear-search hide">
         <i class="fas fa-window-close hide"></i>
@@ -26,10 +26,9 @@ const createAutoComplete = (config) => {
 	};
 	const onInput = async (event) => {
 		let searchResults;
-		if (event.target.value.length > 2) {
-			searchResults = await fetchData(event.target.value);
-		}
+		searchResults = await fetchData(event.target.value);
 		if (searchResults) {
+			dropdownResults.innerHTML = '';
 			for (let country of searchResults) {
 				let option = document.createElement('a');
 				option.classList.add('dropdown-item');
@@ -38,7 +37,7 @@ const createAutoComplete = (config) => {
 				option.addEventListener('click', () => {
 					onOptionSelect(country);
 					dropdownToggle.close();
-					input.value = country;
+					input.value = country.name;
 				});
 			}
 			dropdownToggle.open();
